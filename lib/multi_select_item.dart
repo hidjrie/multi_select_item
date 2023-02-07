@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MultiSelectController {
-  List<int> selectedIndexes = new List();
+  List<int>? selectedIndexes;
   bool isSelecting = false;
   bool disableEditingWhenNoneSelected = true;
   int listLength = 0;
@@ -10,19 +10,19 @@ class MultiSelectController {
   void set(int i) {
     listLength = i;
     isSelecting = false;
-    selectedIndexes.clear();
+    selectedIndexes!.clear();
   }
 
   /// Returns true if the id is selected
   bool isSelected(int i) {
-    return selectedIndexes.contains(i);
+    return selectedIndexes!.contains(i);
   }
 
   /// Toggle all select.
   /// If there are some that not selected, it will select all.
   /// If not, it will deselect all.
   void toggleAll() {
-    if (selectedIndexes.length == listLength) {
+    if (selectedIndexes!.length == listLength) {
       deselectAll();
     } else {
       selectAll();
@@ -40,18 +40,18 @@ class MultiSelectController {
   /// Deselect all
   void deselectAll() {
     isSelecting = !disableEditingWhenNoneSelected;
-    selectedIndexes.clear();
+    selectedIndexes!.clear();
   }
 
   /// Toggle at index
   void toggle(int index) {
-    if (selectedIndexes.contains(index)) {
-      selectedIndexes.remove(index);
+    if (selectedIndexes!.contains(index)) {
+      selectedIndexes!.remove(index);
     } else {
-      selectedIndexes.add(index);
+      selectedIndexes!.add(index);
     }
 
-    if (selectedIndexes.isEmpty && disableEditingWhenNoneSelected) {
+    if (selectedIndexes!.isEmpty && disableEditingWhenNoneSelected) {
       isSelecting = false;
     } else {
       isSelecting = true;
@@ -60,19 +60,19 @@ class MultiSelectController {
 
   /// Select at index
   void select(int index) {
-    if (!selectedIndexes.contains(index)) {
-      selectedIndexes.add(index);
+    if (!selectedIndexes!.contains(index)) {
+      selectedIndexes!.add(index);
     }
     isSelecting = true;
   }
 
   /// Deselect at index
   void deselect(int index) {
-    if (selectedIndexes.contains(index)) {
-      selectedIndexes.remove(index);
+    if (selectedIndexes!.contains(index)) {
+      selectedIndexes!.remove(index);
     }
 
-    if (selectedIndexes.isEmpty && disableEditingWhenNoneSelected) {
+    if (selectedIndexes!.isEmpty && disableEditingWhenNoneSelected) {
       isSelecting = false;
     } else {
       isSelecting = true;
@@ -86,10 +86,10 @@ class MultiSelectItem extends StatefulWidget {
   final VoidCallback onSelected;
 
   const MultiSelectItem({
-    Key key,
-    this.child,
-    @required this.isSelecting,
-    @required this.onSelected,
+    Key? key,
+    required this.child,
+    required this.isSelecting,
+    required this.onSelected,
   }) : super(key: key);
 
   @override
